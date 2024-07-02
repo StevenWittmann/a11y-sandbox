@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Talk ARIA</title>
+    <link href="../src/prism.css" rel="stylesheet" />
+    <script src="../src/prism.js"></script>
+    <link rel="stylesheet" href="../main.css" />
+    <script type="text/javascript" src="../main.js" defer=""></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Tech Talk ARIA</h1>
+      <nav>
+        <a href="../index.html">Index</a>
+        <a href="labels.html">ARIA Labels</a>
+        <a href="states.html">ARIA States</a>
+        <a href="aria-necessary.html">ARIA Necessary</a>
+        <a href="misc.html">Misc</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2 id="misc">ARIA Necessary</h2>
+      <p>
+        Bei speziellen Funktionen sollten unbedingt ARIA Attribute gesetzt
+        werden, um die Funktionalität für Screenreader sicherzustellen.
+      </p>
+
+      <!-- new section -->
+      <section>
+        <h3>Dynamische Inhalte</h3>
+        <p>
+          Auf interaktiven Webseiten / -anwendungen werden Nutzer immer wieder
+          über Ereignisse informiert. Produkt wurde dem Warenkorb hinzugefügt,
+          gelöscht, etc. Wird eine Nachricht angezeigt oder ein Status
+          aktualisiert, bemerkt der Sehende dies über farbige Boxen. Um a11y
+          konform zu arbeiten müssen wir für Benachrichtungen auf der Tonspur
+          sorgen
+          <code>aria-live</code> Attribut.
+        </p>
+        <div class="wrapper">
+          <div>
+            <div id="status" role="status" aria-live="assertive">
+              Hey hast du Hunger? Bestell dir doch eine Pizza!
+            </div>
+            <button onclick="makeOrder()">Pizza bestellen</button>
+          </div>
+          <!-- code to show 
+             encode with https://emn178.github.io/online-tools/html_encode.html -->
+          <pre aria-hidden="true" class="language-html">
+              <code class="language-html">
+&lt;div id=&quot;status&quot; role=&quot;status&quot; aria-live=&quot;assertive&quot;&gt;
+  Hey hast du Hunger? Bestell dir doch eine Pizza!
+&lt;/div&gt;
+&lt;button onclick=&quot;makeOrder()&quot;&gt;Pizza bestellen&lt;/button&gt;
+
+/**
+  off       The default. Updates should not be announced.
+
+  polite    Updates should be announced only if the user is idle.
+
+  assertive Updates should be announced to the user as soon as possible.
+*/
+              </code>
+            </pre>
+        </div>
+      </section>
+
+      <!-- new section -->
+      <section>
+        <h3>Widget mit Tabs</h3>
+        <p>Könnte man hier noch erstellen</p>
+
+        <div class="wrapper">
+          <div>
+            <!-- code to render -->
+          </div>
+          <!-- code to show encode with https://emn178.github.io/online-tools/html_encode.html -->
+          <pre aria-hidden="true" class="language-html">
+            <code class="language-html">
+            </code>
+          </pre>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

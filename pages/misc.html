@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Talk ARIA</title>
+    <link href="../src/prism.css" rel="stylesheet" />
+    <script src="../src/prism.js"></script>
+    <link rel="stylesheet" href="../main.css" />
+    <script type="text/javascript" src="../main.js" defer=""></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Tech Talk ARIA</h1>
+      <nav>
+        <a href="../index.html">Index</a>
+        <a href="labels.html">ARIA Labels</a>
+        <a href="states.html">ARIA States</a>
+        <a href="aria-necessary.html">ARIA Necessary</a>
+        <a href="misc.html">Misc</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2 id="misc">Miscellaneous</h2>
+
+      <h3 aria-hidden="true">Background Image</h3>
+      <section>
+        <h3 style="display: none">Background Image</h3>
+        <p>
+          Das Hintergrundbild benötigt ebenso ein alt Attribute. Durch leer
+          lassen das alt Attributes wird dem SR vermittelt, dass es sich um ein
+          dekoratives Element handelt. Alternativ geht auch ein aria-hidden.
+        </p>
+        <div class="wrapper">
+          <img
+            id="background"
+            src="images/pexels-pixabay-531880.jpg"
+            alt="Blick auf Stadt durch verregnetes Fenster"
+          />
+          <pre aria-hidden="true" class="language-html">
+            <code class="language-html">
+&lt;img 
+  id="background" 
+  src="src/pexels-pixabay-531880.jpg" 
+  alt="Blick auf Stadt durch verregnetes Fenster" 
+/&gt;
+            </code>
+          </pre>
+        </div>
+      </section>
+
+      <section>
+        <h3>Standard Image</h3>
+        <p>
+          Jedes Bild benötigt ein <code>alt-Attribute</code>, dieses wird vom SR
+          vorgelesen. Es wird aber auch angsagt dass es sich um ein Bild
+          handelt. Die Elementbezeichnug muss niemals im
+          <code>label-</code> oder <code>alt-Attribute</code> Attribute notiert
+          werden.
+        </p>
+
+        <div class="wrapper">
+          <img
+            height="560"
+            width="560"
+            src="https://cataas.com/cat/funny?type=square"
+            alt="Bild von lustiger Katze"
+          />
+
+          <div>
+            <pre aria-hidden="true" class="language-html">
+            <code class="language-html">
+&lt;img 
+  src="https://cataas.com/cat/funny?type=square" 
+  alt="Bild von lustiger Katze"
+/&gt;
+            </code>
+          </pre>
+            <button class="toggle-btn">show a11y improved code</button>
+            <pre aria-hidden="true" class="language-html hidden">
+             <code class="language-html">
+&lt;img 
+  src="https://cataas.com/cat/funny?type=square" 
+  alt="lustige Katze"
+/&gt;
+              </code>
+            </pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- new section -->
+      <section>
+        <h3>Native Element &lt;search&gt;</h3>
+        <p>Respresents a landmark</p>
+
+        <div class="wrapper">
+          <div>
+            <search>
+              <label>
+                Search the page
+                <input type="search" id="query" />
+              </label>
+            </search>
+          </div>
+          <!-- code to show encode with https://emn178.github.io/online-tools/html_encode.html -->
+          <pre aria-hidden="true" class="language-html">
+            <code class="language-html">
+&lt;search&gt;
+  &lt;label&gt;
+    Search the page
+    &lt;input type=&quot;search&quot; id=&quot;query&quot; /&gt;
+  &lt;/label&gt;
+&lt;/search&gt;
+            </code>
+          </pre>
+        </div>
+      </section>
+
+      <section>
+        <h3>Nachgebauter Button</h3>
+        <p>
+          Der native Button bringt Funktionalität und Styling mit. Zu beachten
+          sind auch hover, focus und active styles.
+        </p>
+
+        <table>
+          <tr>
+            <td>
+              <button onclick="alert('Hallo!')">HTML 5 Standard Button</button>
+            </td>
+            <td>
+              <pre aria-hidden="true" class="language-html">
+      <code class="language-html">
+  &lt;!-- simple button --&gt;
+  &lt;button onclick=&quot;alert(&#39;Hallo!&#39;)&quot;&gt;HTML 5 Standard Button&lt;/button&gt;
+      </code>
+</pre>
+            </td>
+          </tr>
+          <tr>
+            <td><div onclick="alert('Hallo!')">DIV mit Klick Event</div></td>
+            <td>
+              <pre aria-hidden="true" class="language-html">
+              <code class="language-html">
+  
+  &lt;!-- simple div screenreader will initially read this but that&#39;s all --&gt;
+  &lt;div onclick=&quot;alert(&#39;Hallo!&#39;)&quot;&gt;DIV mit Klick Event&lt;/div&gt;
+  
+              </code>
+            </pre>
+            </td>
+          </tr>
+          <tr>
+            <td><div role="button" onclick="alert('Hallo!')">
+              DIV mit Role Button
+            </div></td>
+            <td>
+              <pre aria-hidden="true" class="language-html">
+              <code class="language-html">
+  &lt;style&gt;
+  div[role=&quot;button&quot;] {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 1rem;
+    cursor: pointer;
+  
+    &amp;:hover {
+      background-color: #eee;
+    }
+  }
+  &lt;/style&gt;
+  &lt;!-- screenreader will know its clickable --&gt;
+  &lt;div role=&quot;button&quot; onclick=&quot;alert(&#39;Hallo!&#39;)&quot;&gt;
+    DIV mit Role Button
+  &lt;/div&gt;
+  
+              </code>
+            </pre>
+            </td>
+          </tr>
+          <tr>
+            <td><div tabindex="0" role="button" onclick="alert('Hallo!')">
+              DIV mit Tab Index
+            </div></td>
+            <td>
+              <pre aria-hidden="true" class="language-html">
+              <code class="language-html">
+  
+  &lt;!-- keyboard kann button fokussieren 
+    wenn ein Screenreader läuft, löst Return und Space das onclick Event
+    aus, wenn nicht dann nicht --&gt;
+  &lt;div tabindex=&quot;0&quot; role=&quot;button&quot; onclick=&quot;alert(&#39;Hallo!&#39;)&quot;&gt;
+    DIV mit Tab Index
+  &lt;/div&gt;
+  
+              </code>
+            </pre>
+            </td>
+          </tr>
+          <td></td>
+          <tr>
+            <td><div
+              tabindex="0"
+              role="button"
+              onclick="alert('Hallo!')"
+              onkeyup="alert('Hallo!')"
+            >
+              DIV mit on keyup Event
+            </div>
+</td>
+            <td>
+              <pre aria-hidden="true" class="language-html">
+              <code class="language-html">
+  
+  &lt;!-- alert wird bei jedem Tastatur Druck ausgelöst --&gt;
+  &lt;div
+    tabindex=&quot;0&quot;
+    role=&quot;button&quot;
+    onclick=&quot;alert(&#39;Hallo!&#39;)&quot;
+    onkeyup=&quot;alert(&#39;Hallo!&#39;)&quot;
+  &gt;
+    DIV mit onkeyup Event
+  &lt;/div&gt;
+  
+              </code>
+            </pre>
+            </td>
+          </tr>
+          <tr>
+            <td><div
+              aria-label="Alert the word Hallo"
+              tabindex="0"
+              role="button"
+              onclick="alert('Hallo!')"
+              id="btn"
+            >
+              DIV mit Eventlistener
+            </div>
+          </div>
+          <script>
+            document.getElementById("btn").addEventListener("keyup", test);
+            function test(event) {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                alert("Hallo!");
+              }
+            }
+          </script></td>
+            <td>
+              <pre aria-hidden="true" class="language-html">
+              <code class="language-html">
+  &lt;!-- alert wird mit Return und Space ausgelöst --&gt;
+  &lt;div
+    aria-label=&quot;Alert the word Hallo&quot;
+    tabindex=&quot;0&quot;
+    role=&quot;button&quot;
+    onclick=&quot;alert(&#39;Hallo!&#39;)&quot;
+    id=&quot;btn&quot;
+  &gt;
+    DIV mit eventlistener
+  &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+  document.getElementById(&quot;btn&quot;).addEventListener(&quot;keyup&quot;, test);
+  function test(event) {
+    if (event.key === &quot;Enter&quot; || event.key === &quot; &quot;) {
+      event.preventDefault();
+      alert(&quot;Hallo!&quot;);
+    }
+  }
+  &lt;/script&gt;
+              </code>
+            </pre>
+            </td>
+          </tr>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

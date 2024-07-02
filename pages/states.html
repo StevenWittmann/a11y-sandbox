@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Talk ARIA</title>
+    <link href="../src/prism.css" rel="stylesheet" />
+    <script src="../src/prism.js"></script>
+    <link rel="stylesheet" href="../main.css" />
+    <script type="text/javascript" src="../main.js" defer=""></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Tech Talk ARIA</h1>
+      <nav>
+        <a href="../index.html">Index</a>
+        <a href="labels.html">ARIA Labels</a>
+        <a href="states.html">ARIA States</a>
+        <a href="aria-necessary.html">ARIA Necessary</a>
+        <a href="misc.html">Misc</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2 id="states">ARIA States</h2>
+      <p>
+        States und Properties / Atributes werden in einem Atemzug genannt.
+        Status sind Properties die einen temporären Zustand eines Elements
+        beschreiben bspw. aria-expanded true/false, aria-disabled, aria-checked
+        oder aria-invalid.
+      </p>
+
+      <section>
+        <h3>Accordion with &lt;div&gt;</h3>
+        <p>Standard Akkordeon made by Codium AI</p>
+
+        <div class="wrapper">
+          <div>
+            <div class="accordion">Accordion Item 1</div>
+            <div class="panel">
+              <p>This is the content of the first section.</p>
+            </div>
+
+            <div class="accordion">Accordion Item 2</div>
+            <div class="panel">
+              <p>This is the content of the second section.</p>
+            </div>
+
+            <div class="accordion">Accordion Item 3</div>
+            <div class="panel">
+              <p>This is the content of the third section.</p>
+            </div>
+
+            <script>
+              var acc = document.getElementsByClassName("accordion");
+              var i;
+
+              for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                  this.classList.toggle("active");
+                  var panel = this.nextElementSibling;
+                  if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                  } else {
+                    panel.style.display = "block";
+                  }
+                });
+              }
+            </script>
+          </div>
+          <pre aria-hidden="true" class="language-html">
+            <code class="language-html">
+&lt;div class=&quot;accordion&quot;&gt;Accordion Item 1&lt;/div&gt;
+&lt;div class=&quot;panel&quot;&gt;
+  &lt;p&gt;This is the content of the first section.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;accordion&quot;&gt;Accordion Item 2&lt;/div&gt;
+&lt;div class=&quot;panel&quot;&gt;
+  &lt;p&gt;This is the content of the second section.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;accordion&quot;&gt;Accordion Item 3&lt;/div&gt;
+&lt;div class=&quot;panel&quot;&gt;
+  &lt;p&gt;This is the content of the third section.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  var acc = document.getElementsByClassName(&quot;accordion&quot;);
+  var i;
+
+  for (i = 0; i &lt; acc.length; i++) {
+    acc[i].addEventListener(&quot;click&quot;, function () {
+      this.classList.toggle(&quot;active&quot;);
+      var panel = this.nextElementSibling;
+      if (panel.style.display === &quot;block&quot;) {
+        panel.style.display = &quot;none&quot;;
+      } else {
+        panel.style.display = &quot;block&quot;;
+      }
+    });
+  }
+&lt;/script&gt;
+            </code>
+          </pre>
+        </div>
+      </section>
+
+      <section>
+        <h3>Accordion with &lt;div&gt;</h3>
+        <p>
+          Der <code>tabindex</code> muss gesetzt werden, damit der SR es wieder
+          vorliest. Weiterhin muss JS geschrieben werden damit neben der Klick
+          Methode auch die Tastatur berückstichtigt wird.
+
+          <h4>Best Practises</h4>
+          <ul>
+            <li>keine divs mit <code>tabindex</code> nutzen, sondern <code>&lt;button&gt;</code> inklusive <code>&lt;h3&gt;</code>, bzw. die semantisch nächste Headline </li>
+            <li>eine Alternative kann auch <code>&lt;details&gt;</code> inklusive <code>&lt;summary&gt;</code> sein</li>
+          </ul>
+        </p>
+        <div class="wrapper">
+          <div>
+            <div
+              class="accordion-a11y-ready"
+              role="button"
+              tabindex="0"
+              aria-expanded="false"
+            >
+              Accordion Item 1
+            </div>
+            <div class="panel">
+              <p>This is the content of the first section.</p>
+            </div>
+
+            <div
+              class="accordion-a11y-ready"
+              role="button"
+              tabindex="0"
+              aria-expanded="false"
+            >
+              Accordion Item 2
+            </div>
+            <div class="panel">
+              <p>This is the content of the second section.</p>
+            </div>
+
+            <div
+              class="accordion-a11y-ready"
+              role="button"
+              tabindex="0"
+              aria-expanded="false"
+            >
+              Accordion Item 3
+            </div>
+            <div class="panel">
+              <p>This is the content of the third section.</p>
+            </div>
+
+            <script>
+              var acc = document.getElementsByClassName("accordion-a11y-ready");
+              var i;
+
+              for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                  var isExpanded =
+                    this.getAttribute("aria-expanded") === "true"
+                      ? true
+                      : false;
+
+                  this.setAttribute("aria-expanded", !isExpanded);
+                  var panel = this.nextElementSibling;
+                  panel.style.display = !isExpanded ? "block" : "none";
+                });
+
+                acc[i].addEventListener("keydown", function (event) {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    this.click();
+                  }
+                });
+              }
+            </script>
+          </div>
+          <pre aria-hidden="true" class="language-html">
+        <code class="language-html">
+&lt;style&gt;
+  .accordion-a11y-ready[aria-expanded=&quot;false&quot;]::before {
+    content: &quot;▶&quot;;
+  }
+  .accordion-a11y-ready[aria-expanded=&quot;true&quot;]::before {
+    content: &quot;▼&quot;;
+  }
+&lt;/style&gt;
+
+&lt;div
+  class=&quot;accordion-a11y-ready&quot;
+  role=&quot;button&quot;
+  tabindex=&quot;0&quot;
+  aria-expanded=&quot;false&quot;
+&gt;
+  Accordion Item 1
+&lt;/div&gt;
+&lt;div class=&quot;panel&quot;&gt;
+  &lt;p&gt;This is the content of the first section.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div
+  class=&quot;accordion-a11y-ready&quot;
+  role=&quot;button&quot;
+  tabindex=&quot;0&quot;
+  aria-expanded=&quot;false&quot;
+&gt;
+  Accordion Item 2
+&lt;/div&gt;
+&lt;div class=&quot;panel&quot;&gt;
+  &lt;p&gt;This is the content of the second section.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div
+  class=&quot;accordion-a11y-ready&quot;
+  role=&quot;button&quot;
+  tabindex=&quot;0&quot;
+  aria-expanded=&quot;false&quot;
+&gt;
+  Accordion Item 3
+&lt;/div&gt;
+&lt;div class=&quot;panel&quot;&gt;
+  &lt;p&gt;This is the content of the third section.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  var acc = document.getElementsByClassName(&quot;accordion-a11y-ready&quot;);
+  var i;
+
+  for (i = 0; i &lt; acc.length; i++) {
+    acc[i].addEventListener(&quot;click&quot;, function () {
+      var isExpanded =
+        this.getAttribute(&quot;aria-expanded&quot;) === &quot;true&quot;
+          ? true
+          : false;
+
+      this.setAttribute(&quot;aria-expanded&quot;, !isExpanded);
+      var panel = this.nextElementSibling;
+      panel.style.display = !isExpanded ? &quot;block&quot; : &quot;none&quot;;
+    });
+
+    acc[i].addEventListener(&quot;keydown&quot;, function (event) {
+      if (event.key === &quot;Enter&quot; || event.key === &quot; &quot;) {
+        event.preventDefault();
+        this.click();
+      }
+    });
+  }
+&lt;/script&gt;
+        </code>
+      </pre>
+        </div>
+      </section>
+
+      <section>
+        <h3>Accordion with &lt;summary&gt;</h3>
+        <p>Weniger Code gleiche Funktionalität</p>
+
+        <div class="wrapper">
+          <div>
+            <details>
+              <summary>Accordion Item 1</summary>
+              <p>This is the content of the first section.</p>
+            </details>
+
+            <details>
+              <summary>Accordion Item 2</summary>
+              <p>This is the content of the second section.</p>
+            </details>
+
+            <details>
+              <summary>Accordion Item 3</summary>
+              <p>This is the content of the third section.</p>
+            </details>
+          </div>
+
+          <!-- HTML Code von oben -->
+          <pre aria-hidden="true" class="language-html">
+            <code class="language-html">
+&lt;div&gt;
+&lt;details&gt;
+  &lt;summary&gt;Accordion Item 1&lt;/summary&gt;
+  &lt;p&gt;This is the content of the first section.&lt;/p&gt;
+&lt;/details&gt;
+&lt;details&gt;
+  &lt;summary&gt;Accordion Item 2&lt;/summary&gt;
+  &lt;p&gt;This is the content of the second section.&lt;/p&gt;
+&lt;/details&gt;
+            </code>
+          </pre>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

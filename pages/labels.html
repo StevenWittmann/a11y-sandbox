@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Talk ARIA</title>
+    <link href="../src/prism.css" rel="stylesheet" />
+    <script src="../src/prism.js"></script>
+    <link rel="stylesheet" href="../main.css" />
+    <script type="text/javascript" src="../main.js" defer=""></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Tech Talk ARIA</h1>
+      <nav>
+        <a href="../index.html">Index</a>
+        <a href="labels.html">ARIA Labels</a>
+        <a href="states.html">ARIA States</a>
+        <a href="aria-necessary.html">ARIA Necessary</a>
+        <a href="misc.html">Misc</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2 id="states">ARIA Labels</h2>
+
+      <section>
+        <h3>Beschreibende Attribute</h3>
+        <h4>
+          Was ist der Unterschied zwischen <code>aria-label</code> and
+          <code>title</code>?
+        </h4>
+        <p>
+          Manchmal müssen Elemente mit labels oder titles näher beschrieben
+          werden. Zum Beispiel wenn ein Button nur mittels Icon dargestellt
+          werden soll.
+        </p>
+        <p>
+          Manche Screenreader (NVDA v2024.1) lesen beides vor, was zu Dopplungen
+          führt. Der Vorteil des <code>title</code> ist, dass ein Popup on hover
+          erscheint. Aber auch nur für Desktop bzw. Maus Nutzer. Ein
+          individuelles Abwägen ist hier erforderlich.
+        </p>
+
+        <table>
+          <tr>
+            <td>
+              <a
+                href="/"
+                aria-label="This is my aria label"
+                title="This is my title"
+              >
+                Link with label and title
+              </a>
+            </td>
+            <td>
+              <pre aria-hidden="true" class="language-html">
+                <code class="language-html">
+&lt;a
+  href=&quot;/&quot;
+  aria-label=&quot;This is my aria label&quot;
+  title=&quot;This is my title&quot;
+&gt;
+  Link with label and title
+&lt;/a&gt;
+                        </code>
+                      </pre>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button type="submit" title="Zum Warenkorb hinzufügen">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-shopping-cart"
+                >
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path
+                    d="M1 1h4l2.6 13.59a.75.75 0 0 0 .74.59h10.5a.75.75 0 0 0 .74-.64l3.02-12H6.42"
+                  ></path>
+                  <path d="M7 7h14v2H7V7z"></path>
+                </svg>
+              </button>
+            </td>
+            <td>
+              <pre aria-hidden="true" class="language-html">
+                <code class="language-html">
+&lt;button type=&quot;submit&quot; title=&quot;Zum Warenkorb hinzufügen&quot;&gt;
+  &lt;svg
+    aria-hidden=&quot;true&quot;
+    xmlns=&quot;http://www.w3.org/2000/svg&quot;
+    width=&quot;24&quot;
+    height=&quot;24&quot;
+    viewBox=&quot;0 0 24 24&quot;
+    fill=&quot;none&quot;
+    stroke=&quot;currentColor&quot;
+    stroke-width=&quot;2&quot;
+    stroke-linecap=&quot;round&quot;
+    stroke-linejoin=&quot;round&quot;
+    class=&quot;feather feather-shopping-cart&quot;
+  &gt;
+    &lt;circle cx=&quot;9&quot; cy=&quot;21&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;
+    &lt;circle cx=&quot;20&quot; cy=&quot;21&quot; r=&quot;1&quot;&gt;&lt;/circle&gt;
+    &lt;path
+      d=&quot;M1 1h4l2.6 13.59a.75.75 0 0 0 .74.59h10.5a.75.75 0 0 0 .74-.64l3.02-12H6.42&quot;
+    &gt;&lt;/path&gt;
+    &lt;path d=&quot;M7 7h14v2H7V7z&quot;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+&lt;/button&gt;
+          </code>
+        </pre>
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h3>labelledby and describedby</h3>
+
+        <div class="wrapper">
+          <div>
+            <p>This has a label</p>
+          </div>
+
+          <!-- HTML Code von oben -->
+          <pre aria-hidden="true" class="language-html">
+            <code class="language-html">
+              
+            </code>
+          </pre>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

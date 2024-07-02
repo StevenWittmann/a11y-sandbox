@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Talk ARIA</title>
+    <link href="src/prism.css" rel="stylesheet" />
+    <script src="src/prism.js"></script>
+    <link rel="stylesheet" href="main.css" />
+    <script type="text/javascript" src="main.js" defer=""></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Tech Talk ARIA</h1>
+      <nav>
+        <a href="index.html">Index</a>
+        <a href="pages/labels.html">ARIA Labels</a>
+        <a href="pages/states.html">ARIA States</a>
+        <a href="aria-necessary.html">ARIA Necessary</a>
+        <a href="pages/misc.html">Misc</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- new section -->
+      <h2 id="roles">ARIA Rules (not Roles)</h2>
+      <section>
+        <p>
+          Zusammenfassung der Regeln.
+          <a href="https://www.w3.org/TR/using-aria/#NOTES" target="_blank"
+            >W3C Dokumentation</a
+          >
+        </p>
+        <ol>
+          <li>Kein ARIA, wenn ein HTML5 Element genutzt werden kann.</li>
+          <li>Ändere nicht die Semantik eines HTML Elements mit ARIA Roles</li>
+          <li>Interaktive Elemente sind mit Keyboard erreich- und steuerbar</li>
+          <li>
+            Interaktive Elemente haben nie aria-hidden, display:none,
+            visibility:hidden <br />
+            <span
+              >Das nimmt sie aus dem A11y Baum und macht sie für immer
+              unsichtbar, auch wenn sie nachträglich sichtbar gemacht werden
+            </span>
+          </li>
+          <li>
+            Interaktive Elemente haben einen “Accessible Name”, aria-label,
+            aria-labelledby oder aria-describedby
+          </li>
+        </ol>
+      </section>
+      <section>
+        <img src="pages/images/aria.jpg" alt="use html5 brudi" />
+        <audio src="src/bradpitt.wav" controls></audio>
+      </section>
+    </main>
+  </body>
+</html>
