@@ -38,8 +38,8 @@ const makeOrder = () => {
 	}, 0);
 };
 
-// Get all buttons with the 'toggle-btn' class
-const toggleButtons = document.querySelectorAll(".toggle-btn");
+// Get all buttons with the 'toggle-code-visibility' class
+const toggleButtons = document.querySelectorAll(".toggle-code-visibility");
 
 for (let i = 0; i < toggleButtons.length; i++) {
 	toggleButtons[i].addEventListener("click", toggleVisibility);
@@ -48,11 +48,13 @@ for (let i = 0; i < toggleButtons.length; i++) {
 function toggleVisibility() {
 	const nextPreElement = findNextSiblingPreElement(this);
 	if (nextPreElement) {
-		nextPreElement.classList.toggle("hidden");
-		this.textContent = !nextPreElement.classList.contains("hidden")
-			? "Hide a11y improved code"
-			: "Show a11y improved code";
-		updateButtonText(this, nextPreElement);
+		nextPreElement.forEach((pre) => {
+			pre.classList.toggle("hidden");
+		});
+
+		this.textContent = !nextPreElement[0].classList.contains("hidden")
+			? "hide code"
+			: "show code";
 	}
 }
 
@@ -61,5 +63,60 @@ function findNextSiblingPreElement(element) {
 	while (sibling && sibling.tagName !== "PRE") {
 		sibling = sibling.nextElementSibling;
 	}
-	return sibling;
+
+	if (!sibling) return null;
+
+	const preElements = [sibling];
+	const nextSibling = preElements[0].nextElementSibling;
+	if (nextSibling && nextSibling.tagName === "PRE") {
+		preElements.push(nextSibling);
+	}
+
+	console.log(preElements);
+
+	return preElements;
+}
+
+/* ARIA Necessary Page */
+
+const tabComponent = document.getElementById("tab-component");
+const tabs = tabComponent.querySelectorAll("button");
+const panels = tabComponent.querySelectorAll("div[role=tabpanel]");
+let lastFocussed = null;
+for (let i = 0; i < tabs.length; i++) {
+	tabs[i].addEventListener("click", (event) => {
+		tabs.forEach((tab) => {
+			tab.setAttribute("aria-selected", false);
+		});
+
+		panels.forEach((panel) => {
+			panel.classList.remove("selected");
+		});
+		event.target.setAttribute("aria-selected", true);
+		panels[i].classList.add("selected");
+	});
+	tabs[i].addEventListener("keydown", (event) => {
+		if (event.key === "ArrowDown") {
+			lastFocussed = document.activeElement;
+			tabComponent.querySelector("div[role='tabpanel'].selected").focus();
+		} else if (
+			event.key === "ArrowLeft" &&
+			document.activeElement.previousElementSibling
+		) {
+			document.activeElement.previousElementSibling.focus();
+		} else if (
+			event.key === "ArrowRight" &&
+			document.activeElement.nextElementSibling
+		) {
+			document.activeElement.nextElementSibling.focus();
+		}
+	});
+
+	// key up does not work if nvda is running
+	// other screenreader are not tested
+	panels[i].addEventListener("keydown", (event) => {
+		if (event.key === "ArrowUp") {
+			lastFocussed ? lastFocussed.focus() : null;
+		}
+	});
 }

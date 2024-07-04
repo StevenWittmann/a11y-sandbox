@@ -220,6 +220,10 @@ section:has(img#background) {
   }
 }
 
+button.toggle-code-visibility {
+  margin: 1rem 0;
+}
+
 pre,
 pre[class*="language-"] {
   margin: 0;
@@ -227,6 +231,8 @@ pre[class*="language-"] {
   scale: 1;
   opacity: 1;
   display: flex;
+
+  margin-bottom: 1rem;
 
   transition: display opacity;
   transition-duration: 0.5s;
@@ -299,6 +305,37 @@ div#status {
   &.ready {
     background-color: #7af0a2;
     border: 3px solid #15ed5d;
+  }
+}
+
+div#tab-component {
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 1rem;
+
+  div[role="tablist"] {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid grey;
+    padding-bottom: 1rem;
+
+    h4 {
+      margin: 0;
+    }
+
+    button {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    button[aria-selected="true"] {
+      border: 2px solid green;
+    }
+  }
+  div[role="tabpanel"]:not(.selected) {
+    display: none;
   }
 }
 

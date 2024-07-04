@@ -25,27 +25,23 @@
     <main>
       <h2 id="misc">ARIA Necessary</h2>
       <p>
-        Bei speziellen Funktionen sollten unbedingt ARIA Attribute gesetzt
-        werden, um die Funktionalität für Screenreader sicherzustellen.
+        Bei speziellen Funktionen sollten unbedingt ARIA Attribute gesetzt werden, um die Funktionalität für
+        Screenreader sicherzustellen.
       </p>
 
       <!-- new section -->
       <section>
         <h3>Dynamische Inhalte</h3>
         <p>
-          Auf interaktiven Webseiten / -anwendungen werden Nutzer immer wieder
-          über Ereignisse informiert. Produkt wurde dem Warenkorb hinzugefügt,
-          gelöscht, etc. Wird eine Nachricht angezeigt oder ein Status
-          aktualisiert, bemerkt der Sehende dies über farbige Boxen. Um a11y
-          konform zu arbeiten müssen wir für Benachrichtungen auf der Tonspur
-          sorgen
+          Auf interaktiven Webseiten / -anwendungen werden Nutzer immer wieder über Ereignisse informiert. Produkt wurde
+          dem Warenkorb hinzugefügt, gelöscht, etc. Wird eine Nachricht angezeigt oder ein Status aktualisiert, bemerkt
+          der Sehende dies über farbige Boxen. Um a11y konform zu arbeiten müssen wir für Benachrichtungen auf der
+          Tonspur sorgen
           <code>aria-live</code> Attribut.
         </p>
         <div class="wrapper">
           <div>
-            <div id="status" role="status" aria-live="assertive">
-              Hey hast du Hunger? Bestell dir doch eine Pizza!
-            </div>
+            <div id="status" role="status" aria-live="assertive">Hey hast du Hunger? Bestell dir doch eine Pizza!</div>
             <button onclick="makeOrder()">Pizza bestellen</button>
           </div>
           <!-- code to show 
@@ -72,18 +68,101 @@
       <!-- new section -->
       <section>
         <h3>Widget mit Tabs</h3>
-        <p>Könnte man hier noch erstellen</p>
+        <p>Tastaturnavigation mit JavaScript implementiert</p>
 
-        <div class="wrapper">
-          <div>
-            <!-- code to render -->
+        <!-- code to render -->
+        <div id="tab-component">
+          <div role="tablist" aria-label="Tabs mit Details zum Produkt">
+            <button id="tab-1" role="tab" aria-selected="true" aria-controls="panel-1">Details</button>
+            <button id="tab-2" role="tab" aria-selected="false" aria-controls="panel-2">Inhalt</button>
+            <button id="tab-3" role="tab" aria-selected="false" aria-controls="panel-3">Downloads</button>
+            <button id="tab-4" role="tab" aria-selected="false" aria-controls="panel-4">Bewertungen</button>
           </div>
-          <!-- code to show encode with https://emn178.github.io/online-tools/html_encode.html -->
-          <pre aria-hidden="true" class="language-html">
+          <div id="panel-1" role="tabpanel" class="selected" tabindex="0" aria-labelledby="tab-1">
+            <p>Details zum Produkt</p>
+          </div>
+          <div id="panel-2" role="tabpanel" tabindex="0" aria-labelledby="tab-2">
+            <p>Lieferumfang</p>
+          </div>
+          <div id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3">
+            <p>Produktanleitung herunterladen</p>
+          </div>
+          <div id="panel-4" role="tabpanel" tabindex="0" aria-labelledby="tab-4">
+            <p>Bewertungen anderer Kunden</p>
+          </div>
+        </div>
+
+        <button class="toggle-code-visibility">show code</button>
+        <!-- code to show encode with https://emn178.github.io/online-tools/html_encode.html -->
+        <pre aria-hidden="true" class="language-html hidden">
             <code class="language-html">
+&lt;div id=&quot;tab-component&quot;&gt;
+  &lt;div role=&quot;tablist&quot; aria-label=&quot;Tabs mit Details zum Produkt&quot;&gt;
+    &lt;button id=&quot;tab-1&quot; role=&quot;tab&quot; aria-selected=&quot;true&quot; aria-controls=&quot;panel-1&quot;&gt;Details&lt;/button&gt;
+    &lt;button id=&quot;tab-2&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;panel-2&quot;&gt;Inhalt&lt;/button&gt;
+    &lt;button id=&quot;tab-3&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;panel-3&quot;&gt;Downloads&lt;/button&gt;
+    &lt;button id=&quot;tab-4&quot; role=&quot;tab&quot; aria-selected=&quot;false&quot; aria-controls=&quot;panel-4&quot;&gt;Bewertungen&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;panel-1&quot; role=&quot;tabpanel&quot; class=&quot;selected&quot; tabindex=&quot;0&quot; aria-labelledby=&quot;tab-1&quot;&gt;
+    &lt;p&gt;Details zum Produkt&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;panel-2&quot; role=&quot;tabpanel&quot; tabindex=&quot;0&quot; aria-labelledby=&quot;tab-2&quot;&gt;
+    &lt;p&gt;Lieferumfang&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;panel-3&quot; role=&quot;tabpanel&quot; tabindex=&quot;0&quot; aria-labelledby=&quot;tab-3&quot;&gt;
+    &lt;p&gt;Produktanleitung herunterladen&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;panel-4&quot; role=&quot;tabpanel&quot; tabindex=&quot;0&quot; aria-labelledby=&quot;tab-4&quot;&gt;
+    &lt;p&gt;Bewertungen anderer Kunden&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
             </code>
           </pre>
-        </div>
+        <pre aria-hidden="true" class="language-js hidden">
+            <code class="language-js">
+const tabComponent = document.getElementById(&quot;tab-component&quot;);
+const tabs = tabComponent.querySelectorAll(&quot;button&quot;);
+const panels = tabComponent.querySelectorAll(&quot;div[role=tabpanel]&quot;);
+let lastFocussed = null;
+for (let i = 0; i &lt; tabs.length; i++) {
+	tabs[i].addEventListener(&quot;click&quot;, (event) =&gt; {
+		tabs.forEach((tab) =&gt; {
+			tab.setAttribute(&quot;aria-selected&quot;, false);
+		});
+
+		panels.forEach((panel) =&gt; {
+			panel.classList.remove(&quot;selected&quot;);
+		});
+		event.target.setAttribute(&quot;aria-selected&quot;, true);
+		panels[i].classList.add(&quot;selected&quot;);
+	});
+	tabs[i].addEventListener(&quot;keydown&quot;, (event) =&gt; {
+		if (event.key === &quot;ArrowDown&quot;) {
+			lastFocussed = document.activeElement;
+			tabComponent.querySelector(&quot;div[role=&#39;tabpanel&#39;].selected&quot;).focus();
+		} else if (
+			event.key === &quot;ArrowLeft&quot; &amp;&amp;
+			document.activeElement.previousElementSibling
+		) {
+			document.activeElement.previousElementSibling.focus();
+		} else if (
+			event.key === &quot;ArrowRight&quot; &amp;&amp;
+			document.activeElement.nextElementSibling
+		) {
+			document.activeElement.nextElementSibling.focus();
+		}
+	});
+
+	// key up does not work if nvda is running
+	// other screenreader are not tested
+	panels[i].addEventListener(&quot;keydown&quot;, (event) =&gt; {
+		if (event.key === &quot;ArrowUp&quot;) {
+			lastFocussed ? lastFocussed.focus() : null;
+		}
+	});
+}
+            </code>
+        </pre>
       </section>
     </main>
   </body>
